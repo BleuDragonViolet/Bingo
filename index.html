@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à Bingo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 320px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            margin-bottom: 20px; /* Espacement entre les conteneurs */
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            color: #4a148c;
+            font-weight: bold;
+        }
+        .number-display {
+            font-size: 60px;
+            font-weight: bold;
+            color: #8e44ad;
+            margin: 20px 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        button {
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 5px;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        .bingo-card {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+        }
+        .bingo-card div {
+            background: #8e44ad;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .bingo-card div:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Machine à Bingo</h1>
+        <div class="number-display" id="bingo-number">--</div>
+        <button id="generate-button">Générer un numéro</button>
+        <button id="generate-card">Carte Bingo</button>
+    </div>
+
+    <div class="container" id="card-container" style="display: none;">
+        <h2>Carte de Bingo</h2>
+        <input type="text" id="card-name" placeholder="Nom de la carte" style="margin-bottom: 10px; width: 100%; padding: 5px;">
+        <div class="bingo-card" id="bingo-card"></div>
+        <button id="download-card">Télécharger la carte</button>
+        <button id="reset-card">Réinitialiser</button>
+    </div>
+
+    <script>
+        const generateButton = document.getElementById('generate-button');
+        const bingoNumberDisplay = document.getElementById('bingo-number');
+        const generateCardButton = document.getElementById('generate-card');
+        const cardContainer = document.getElementById('card-container');
+        const bingoCard = document.getElementById('bingo-card');
+        const resetCardButton = document.getElementById('reset-card');
+        const downloadCardButton = document.getElementById('download-card');
+
+        // Animation pour générer un numéro
+        function generateBingoNumber() {
+            const randomNumber = Math.floor(Math.random() * 75) + 1;
+            bingoNumberDisplay.style.opacity = '0';
+            bingoNumberDisplay.style.transform = 'scale(0.5)';
+            setTimeout(() => {
+                bingoNumberDisplay.textContent = randomNumber;
+                bingoNumberDisplay.style.opacity = '1';
+                bingoNumberDisplay.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Générer une carte de Bingo
+        function generateBingoCard() {
+            bingoCard.innerHTML = ''; // Réinitialiser la carte
+            const numbers = [];
+            for (let i = 0; i < 25; i++) {
+                let randomNumber;
+                do {
+                    randomNumber = Math.floor(Math.random() * 75) + 1;
+                } while (numbers.includes(randomNumber));
+                numbers.push(randomNumber);
+                const cell = document.createElement('div');
+                cell.textContent = randomNumber;
+                bingoCard.appendChild(cell);
+            }
+            cardContainer.style.display = 'block';
+        }
+
+        // Télécharger la carte en tant qu'image
+        function downloadCard() {
+            const cardName = document.getElementById('card-name').value || 'CarteBingo';
+            html2canvas(cardContainer).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${cardName}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        // Réinitialiser la carte
+        function resetCard() {
+            bingoCard.innerHTML = '';
+            cardContainer.style.display = 'none';
+        }
+
+        // Événements
+        generateButton.addEventListener('click', generateBingoNumber);
+        generateCardButton.addEventListener('click', generateBingoCard);
+        resetCardButton.addEventListener('click', resetCard);
+        downloadCardButton.addEventListener('click', downloadCard);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+</html>
