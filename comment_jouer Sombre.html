@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Jouer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: #000000;
+            /* Fond complètement noir */
+            color: #e0e0e0;
+            /* Texte gris clair pour contraste */
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .main {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .container,
+        .containerr,
+        .sidebar {
+            background: rgba(20, 20, 20, 0.9);
+            /* Fond noir légèrement transparent */
+            color: #e0e0e0;
+            /* Texte gris clair */
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+            /* Ombre noire intense */
+            padding: 20px;
+        }
+
+        .container {
+            width: 320px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .containerr {
+            width: 600px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            overflow-x: auto;
+        }
+
+        h1,
+        h2 {
+            color: #9400d3;
+            /* Violet fluo pour les titres */
+            font-weight: bold;
+        }
+
+        .number-display {
+            font-size: 60px;
+            font-weight: bold;
+            color: #9400d3;
+            /* Violet fluo pour les numéros générés */
+            margin: 20px 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        button {
+            background: linear-gradient(135deg, #55007f, #9400d3);
+            /* Dégradé violet foncé à fluo */
+            color: #ffffff;
+            /* Texte blanc */
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(148, 0, 211, 0.8);
+            /* Effet d'ombre violette fluo */
+        }
+
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 10px rgba(80, 0, 100, 0.7);
+        }
+
+        .bingo-card {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            /* Ajuster à 9 colonnes */
+            gap: 2px;
+            margin: 20px 0;
+        }
+
+        .bingo-card div {
+            background: #1a1a1a;
+            /* Noir foncé pour les cases */
+            color: #9400d3;
+            /* Texte violet fluo */
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            width: 60px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            margin: 1px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .bingo-card div:hover {
+            transform: scale(1.1);
+            background: #3a003d;
+            /* Violet foncé au survol */
+        }
+
+        .bingo-card div .circle-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 0, 255, 0.1);
+            /* Animation légère en rose/violet */
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bingo-card div.active .circle-animation {
+            opacity: 1;
+        }
+
+        .sidebar {
+            max-height: 100px;
+            overflow-y: auto;
+            width: 320px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: flex-start;
+        }
+
+        .sidebar .number {
+            background: #9400d3;
+            /* Violet fluo pour les numéros générés */
+            color: #000000;
+            /* Texte noir pour contraste */
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 50px;
+            text-align: center;
+        }
+
+        footer {
+            color: #e0e0e0;
+            /* Texte gris clair */
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        #theme-menu {
+            display: flex;
+            flex-direction: column;
+            /* Alignement vertical */
+            align-items: center;
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #theme-menu button {
+            display: block;
+            margin: 5px 0;
+            width: 120px;
+            text-align: center;
+        }
+
+        /* Animation de tremblement pour "Binaire" */
+        #theme-menu button:nth-child(3) {
+            animation: shake 0.3s infinite;
+            /* Tremblement continu */
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-3px);
+            }
+
+            50% {
+                transform: translateX(3px);
+            }
+
+            75% {
+                transform: translateX(-3px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Comment Jouer au Bingo</h1>
+        <p>Le bingo est un jeu amusant et facile à apprendre. Voici les étapes pour commencer :</p>
+        <ul>
+            <li>Chaque joueur reçoit une carte contenant une grille de numéros.</li>
+            <li>Un animateur tire des numéros au hasard.</li>
+            <li>Si un numéro tiré figure sur votre carte, marquez-le.</li>
+            <li>Le premier joueur à compléter une ligne, une colonne ou un motif spécifique crie "Bingo !" et gagne la
+                partie.</li>
+        </ul>
+        <p>Amusez-vous bien et bonne chance !</p>
+    </div>
+
+    <footer>
+        <button onclick="window.location.href='theme_sombre.html';">Retour au menu principal</button>
+    </footer>
+</body>
+
+</html>

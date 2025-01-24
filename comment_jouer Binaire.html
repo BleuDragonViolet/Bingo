@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Jouer</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            /* Police de type terminal */
+            text-align: center;
+            background: #000000;
+            /* Fond noir pur */
+            color: #00ff00;
+            /* Texte vert fluo */
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .main {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .container,
+        .containerr,
+        .sidebar {
+            background: rgba(0, 0, 0, 0.9);
+            /* Fond noir semi-transparent */
+            color: #00ff00;
+            /* Texte vert fluo */
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 255, 0, 0.4);
+            /* Ombre verte */
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #00ff00;
+            /* Vert fluo */
+            font-size: 16px;
+            /* Texte plus petit */
+        }
+
+        .number-display {
+            font-size: 24px;
+            /* Taille ajustée pour le binaire */
+            font-family: 'Courier New', monospace;
+            /* Police type code */
+            color: #00ff00;
+            /* Vert fluo */
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        button {
+            background: #003300;
+            /* Fond vert très foncé */
+            color: #00ff00;
+            /* Texte vert fluo */
+            border: 1px solid #00ff00;
+            /* Bordure verte */
+            padding: 8px 15px;
+            /* Boutons plus petits */
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 255, 0, 0.8);
+            /* Effet d'ombre verte */
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .bingo-card {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            /* Ajuster à 9 colonnes */
+            gap: 2px;
+            margin: 20px 0;
+        }
+
+        .bingo-card div {
+            background: #002200;
+            /* Fond vert très foncé */
+            color: #00ff00;
+            /* Texte vert fluo */
+            font-size: 12px;
+            /* Taille réduite pour afficher le binaire */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            width: 40px;
+            border-radius: 3px;
+            margin: 1px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            max-height: 100px;
+            overflow-y: auto;
+            width: 320px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: flex-start;
+        }
+
+
+
+        .sidebar .number {
+            background: #004400;
+            /* Fond vert foncé */
+            color: #00ff00;
+            /* Texte vert fluo */
+            font-size: 12px;
+            /* Taille réduite pour afficher plus de numéros */
+            font-family: 'Courier New', monospace;
+            padding: 5px;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            /* Fond noir semi-transparent */
+            color: #00ff00;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Comment Jouer au Bingo</h1>
+        <p>Le bingo est un jeu amusant et facile à apprendre. Voici les étapes pour commencer :</p>
+        <ul>
+            <li>Chaque joueur reçoit une carte contenant une grille de numéros.</li>
+            <li>Un animateur tire des numéros au hasard.</li>
+            <li>Si un numéro tiré figure sur votre carte, marquez-le.</li>
+            <li>Le premier joueur à compléter une ligne, une colonne ou un motif spécifique crie "Bingo !" et gagne la
+                partie.</li>
+        </ul>
+        <p>Amusez-vous bien et bonne chance !</p>
+    </div>
+
+    <footer>
+        <button onclick="window.location.href='theme_binaire.html';">Retour au menu principal</button>
+    </footer>
+</body>
+
+</html>

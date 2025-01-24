@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à Bingo</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            /* Police de type terminal */
+            text-align: center;
+            background: #000000;
+            /* Fond noir pur */
+            color: #00ff00;
+            /* Texte vert fluo */
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .main {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .container,
+        .containerr,
+        .sidebar {
+            background: rgba(0, 0, 0, 0.9);
+            /* Fond noir semi-transparent */
+            color: #00ff00;
+            /* Texte vert fluo */
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 255, 0, 0.4);
+            /* Ombre verte */
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #00ff00;
+            /* Vert fluo */
+            font-size: 16px;
+            /* Texte plus petit */
+        }
+
+        .number-display {
+            font-size: 24px;
+            /* Taille ajustée pour le binaire */
+            font-family: 'Courier New', monospace;
+            /* Police type code */
+            color: #00ff00;
+            /* Vert fluo */
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        button {
+            background: #003300;
+            /* Fond vert très foncé */
+            color: #00ff00;
+            /* Texte vert fluo */
+            border: 1px solid #00ff00;
+            /* Bordure verte */
+            padding: 8px 15px;
+            /* Boutons plus petits */
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 255, 0, 0.8);
+            /* Effet d'ombre verte */
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .bingo-card {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            /* Ajuster à 9 colonnes */
+            gap: 2px;
+            margin: 20px 0;
+        }
+
+        .bingo-card div {
+            background: #002200;
+            /* Fond vert très foncé */
+            color: #00ff00;
+            /* Texte vert fluo */
+            font-size: 12px;
+            /* Taille réduite pour afficher le binaire */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            width: 40px;
+            border-radius: 3px;
+            margin: 1px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            max-height: 100px;
+            overflow-y: auto;
+            width: 320px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: flex-start;
+        }
+
+
+
+        .sidebar .number {
+            background: #004400;
+            /* Fond vert foncé */
+            color: #00ff00;
+            /* Texte vert fluo */
+            font-size: 12px;
+            /* Taille réduite pour afficher plus de numéros */
+            font-family: 'Courier New', monospace;
+            padding: 5px;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            /* Fond noir semi-transparent */
+            color: #00ff00;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div>
+            <div class="container">
+                <h1>Machine à Bingo</h1>
+                <div class="number-display" id="bingo-number">--</div>
+                <button id="generate-button">Générer un numéro</button>
+                <button id="generate-card">Carte Bingo</button>
+            </div>
+
+            <div class="sidebar" id="generated-numbers">
+                <!-- Numéros générés apparaîtront ici -->
+            </div>
+        </div>
+        <div class="containerr" id="card-container" style="display: none;">
+            <h2>Carte de Bingo</h2>
+            <input type="text" id="card-name" placeholder="Nom de la carte"
+                style="margin-bottom: 10px; width: 100%; padding: 5px;">
+            <div class="bingo-card" id="bingo-card"></div>
+            <button id="download-card">Télécharger la carte</button>
+            <button id="reset-card">Réinitialiser</button>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div style="position: relative; display: inline-block;">
+            <!-- Bouton principal Thème -->
+            <button id="theme-button">Thème</button>
+
+            <!-- Menu de thème horizontal -->
+            <div id="theme-menu">
+                <button class="theme-option" onclick="window.location.href='theme_sombre.html';">01010011 01101111
+                    01101101 01100010 01110010 01100101</button>
+                <button class="theme-option" onclick="window.location.href='index.html';">01100011 01101100 01100001
+                    01101001 01110010 01100101</button>
+                <button class="theme-option" onclick="window.location.href='theme_binaire.html';">01000010 01101001
+                    01101110 01100001 01101001 01110010 01100101</button>
+            </div>
+        </div>
+
+        <!-- Bouton Comment jouer -->
+        <button id="how-to-play" onclick="window.location.href='comment_jouer Binaire.html';">
+            Comment jouer
+        </button>
+    </footer>
+
+
+    <script>
+        // Boutons principaux
+        const generateButton = document.getElementById('generate-button');
+        const bingoNumberDisplay = document.getElementById('bingo-number');
+        const generateCardButton = document.getElementById('generate-card');
+        const cardContainer = document.getElementById('card-container');
+        const bingoCard = document.getElementById('bingo-card');
+        const resetCardButton = document.getElementById('reset-card');
+        const downloadCardButton = document.getElementById('download-card');
+        const generatedNumbersDiv = document.getElementById('generated-numbers');
+        const themeBtn = document.getElementById('theme-button');
+        const themeMenu = document.getElementById('theme-menu');
+
+        // Ensemble des numéros déjà générés
+        let generatedNumbers = new Set();
+
+        // Fonction pour convertir un nombre en binaire sur 8 bits
+        function toBinary(num) {
+            return num.toString(2).padStart(8, '0'); // Conversion du nombre en binaire sur 8 bits
+        }
+
+        // Générer un numéro de Bingo
+        function generateBingoNumber() {
+            const maxNumber = 75;
+
+            if (generatedNumbers.size >= maxNumber) {
+                alert("Tous les numéros ont été générés !");
+                return;
+            }
+
+            let randomNumber;
+            do {
+                randomNumber = Math.floor(Math.random() * maxNumber) + 1;
+            } while (generatedNumbers.has(randomNumber));
+
+            generatedNumbers.add(randomNumber);
+
+            // Animation pour afficher le numéro généré
+            bingoNumberDisplay.style.opacity = '0';
+            bingoNumberDisplay.style.transform = 'scale(0.5)';
+            setTimeout(() => {
+                const binaryNumber = toBinary(randomNumber); // Conversion en binaire
+
+                bingoNumberDisplay.textContent = binaryNumber;
+                bingoNumberDisplay.style.opacity = '1';
+                bingoNumberDisplay.style.transform = 'scale(1)';
+
+                // Ajouter le numéro à la liste
+                const numberDiv = document.createElement('div');
+                numberDiv.textContent = binaryNumber;
+                numberDiv.className = 'number';
+                generatedNumbersDiv.appendChild(numberDiv);
+            }, 300);
+        }
+
+        // Générer une carte de Bingo (3 lignes, 9 colonnes, 4 cases grisées par ligne)
+        function generateBingoCard() {
+            bingoCard.innerHTML = ''; // Réinitialiser la carte
+            const rows = 3;
+            const columns = 9;
+
+            for (let i = 0; i < rows; i++) {
+                const rowNumbers = [];
+                while (rowNumbers.length < columns) {
+                    let randomNumber = Math.floor(Math.random() * 90) + 1; // Numéros entre 1 et 90
+                    if (!rowNumbers.includes(randomNumber)) {
+                        rowNumbers.push(randomNumber);
+                    }
+                }
+                rowNumbers.sort((a, b) => a - b); // Trier les numéros croissants
+
+                // Ajouter 4 cases grisées au hasard
+                const greyedIndexes = [];
+                while (greyedIndexes.length < 4) {
+                    let randomIndex = Math.floor(Math.random() * columns);
+                    if (!greyedIndexes.includes(randomIndex)) {
+                        greyedIndexes.push(randomIndex);
+                    }
+                }
+
+                for (let j = 0; j < columns; j++) {
+                    const cell = document.createElement('div');
+                    if (greyedIndexes.includes(j)) {
+                        cell.style.backgroundColor = 'gray'; // Griser la case
+                        cell.classList.add('greyed');
+                    } else {
+                        cell.textContent = rowNumbers[j];
+                        cell.addEventListener('click', () => {
+                            cell.classList.toggle('active');
+                        });
+                    }
+                    bingoCard.appendChild(cell);
+                }
+            }
+
+            bingoCard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`; // Ajuster les colonnes
+            cardContainer.style.display = 'block';
+        }
+
+        // Télécharger la carte en tant qu'image
+        function downloadCard() {
+            const cardName = document.getElementById('card-name').value || 'CarteBingo';
+            html2canvas(cardContainer).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${cardName}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        // Réinitialiser la carte de Bingo
+        function resetCard() {
+            bingoCard.innerHTML = '';
+            cardContainer.style.display = 'none';
+        }
+
+        // Gestion du menu des thèmes
+        themeBtn.addEventListener('click', () => {
+            // Basculer l'affichage du menu
+            const isHidden = themeMenu.style.display === 'none' || !themeMenu.style.display;
+            themeMenu.style.display = isHidden ? 'block' : 'none';
+        });
+
+        // Fermer le menu si clic à l'extérieur
+        document.addEventListener('click', (e) => {
+            if (!themeMenu.contains(e.target) && e.target !== themeBtn) {
+                themeMenu.style.display = 'none';
+            }
+        });
+
+        // Événements associés aux boutons
+        generateButton.addEventListener('click', generateBingoNumber);
+        generateCardButton.addEventListener('click', generateBingoCard);
+        resetCardButton.addEventListener('click', resetCard);
+        downloadCardButton.addEventListener('click', downloadCard);
+
+        // Initialisation : cacher le menu des thèmes
+        themeMenu.style.display = 'none';
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+
+</html>

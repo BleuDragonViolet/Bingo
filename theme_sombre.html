@@ -9,8 +9,10 @@
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #8e44ad, #3498db);
-            color: #333;
+            background: #000000;
+            /* Fond complètement noir */
+            color: #e0e0e0;
+            /* Texte gris clair pour contraste */
             padding: 20px 0;
             display: flex;
             flex-direction: column;
@@ -25,46 +27,51 @@
             align-items: flex-start;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.9);
+        .container,
+        .containerr,
+        .sidebar {
+            background: rgba(20, 20, 20, 0.9);
+            /* Fond noir légèrement transparent */
+            color: #e0e0e0;
+            /* Texte gris clair */
             border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(153, 131, 131, 0.2);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+            /* Ombre noire intense */
             padding: 20px;
+        }
+
+        .container {
             width: 320px;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .containerr {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            padding: 20px;
             width: 600px;
-            /* Augmenter la largeur pour s'adapter à la grille */
             transition: transform 0.3s ease, opacity 0.3s ease;
             overflow-x: auto;
-            /* Ajouter un défilement horizontal si nécessaire */
         }
 
-
-        h1 {
-            margin-bottom: 20px;
-            font-size: 26px;
-            color: #4a148c;
+        h1,
+        h2 {
+            color: #9400d3;
+            /* Violet fluo pour les titres */
             font-weight: bold;
         }
 
         .number-display {
             font-size: 60px;
             font-weight: bold;
-            color: #8e44ad;
+            color: #9400d3;
+            /* Violet fluo pour les numéros générés */
             margin: 20px 0;
             transition: transform 0.5s ease, opacity 0.5s ease;
         }
 
         button {
-            background: linear-gradient(135deg, #8e44ad, #3498db);
-            color: white;
+            background: linear-gradient(135deg, #55007f, #9400d3);
+            /* Dégradé violet foncé à fluo */
+            color: #ffffff;
+            /* Texte blanc */
             border: none;
             padding: 12px 25px;
             font-size: 16px;
@@ -76,29 +83,13 @@
 
         button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 15px rgba(148, 0, 211, 0.8);
+            /* Effet d'ombre violette fluo */
         }
 
-        .bingo-card div {
-            background: #8e44ad;
-            color: white;
-            font-size: 24px;
-            /* Augmenter la taille du texte */
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 60px;
-            /* Augmenter la hauteur */
-            width: 60px;
-            /* Ajouter une largeur fixe */
-            border-radius: 5px;
-            position: relative;
-            overflow: hidden;
-            margin: 1px;
-            /* Réduire l'espace entre les cellules */
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 10px rgba(80, 0, 100, 0.7);
         }
 
         .bingo-card {
@@ -106,13 +97,33 @@
             grid-template-columns: repeat(9, 1fr);
             /* Ajuster à 9 colonnes */
             gap: 2px;
-            /* Réduire l'espacement */
             margin: 20px 0;
         }
 
+        .bingo-card div {
+            background: #1a1a1a;
+            /* Noir foncé pour les cases */
+            color: #9400d3;
+            /* Texte violet fluo */
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            width: 60px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            margin: 1px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
         .bingo-card div:hover {
             transform: scale(1.1);
+            background: #3a003d;
+            /* Violet foncé au survol */
         }
 
         .bingo-card div .circle-animation {
@@ -121,9 +132,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 0, 255, 0.1);
+            /* Animation légère en rose/violet */
             border-radius: 50%;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -134,10 +145,6 @@
         }
 
         .sidebar {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             max-height: 100px;
             overflow-y: auto;
             width: 320px;
@@ -148,8 +155,10 @@
         }
 
         .sidebar .number {
-            background: #8e44ad;
-            color: white;
+            background: #9400d3;
+            /* Violet fluo pour les numéros générés */
+            color: #000000;
+            /* Texte noir pour contraste */
             padding: 10px;
             border-radius: 5px;
             font-size: 16px;
@@ -157,43 +166,21 @@
             text-align: center;
         }
 
-        button {
-            background: linear-gradient(135deg, #8e44ad, #3498db);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin: 5px;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        button:active {
-            transform: scale(0.95);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
         footer {
+            color: #e0e0e0;
+            /* Texte gris clair */
+            padding: 10px 0;
             position: absolute;
             bottom: 0;
             width: 100%;
             text-align: center;
-            padding: 10px 0;
         }
-
 
         #theme-menu {
             display: flex;
             flex-direction: column;
             /* Alignement vertical */
             align-items: center;
-            /* Centrer les boutons horizontalement */
             position: absolute;
             bottom: 50px;
             left: 50%;
@@ -206,11 +193,9 @@
 
         #theme-menu button {
             display: block;
-            /* Chaque bouton occupe toute la largeur si nécessaire */
             margin: 5px 0;
-            /* Espacement vertical */
             width: 120px;
-            /* Taille fixe pour éviter un désalignement */
+            text-align: center;
         }
 
         /* Animation de tremblement pour "Binaire" */
@@ -281,7 +266,7 @@
         </div>
 
         <!-- Bouton Comment jouer -->
-        <button id="how-to-play" onclick="window.location.href='comment_jouer.html';">
+        <button id="how-to-play" onclick="window.location.href='comment_jouer Sombre.html';">
             Comment jouer
         </button>
     </footer>
